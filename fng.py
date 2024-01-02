@@ -1,12 +1,14 @@
 import json, random
+from os import path
+
 
 class Fng:
 
     def __init__(self):
-        pass
+        self.names_dir = path.dirname(path.realpath(__file__))
 
     def __getdata(self, race):
-        with open(f'names/{race}.json', 'r', encoding="utf-8") as f:
+        with open(f'{self.names_dir}/names/{race}.json', 'r', encoding="utf-8") as f:
             content = json.loads(f.read())
             f.close()
             return content
