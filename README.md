@@ -3,7 +3,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/son-link/names.rand)
 [![Build status](https://ci.appveyor.com/api/projects/status/vua95l4w1jwtwkmy?svg=true)](https://ci.appveyor.com/project/son-link/names-rand)
 ![GitHub release (with filter)](https://img.shields.io/github/v/release/son-link/names.rand)
-
+![](https://img.shields.io/github/downloads/son-link/names.rand/total)
 
 ![Screenshot](screenshot.png)
 
