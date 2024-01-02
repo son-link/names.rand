@@ -1,5 +1,6 @@
 import flet as ft
 import csv
+import real_names
 from math import ceil
 from fng import Fng
 
@@ -27,19 +28,31 @@ class NameRand(ft.UserControl):
         self.t2g_text = f"Total generating (1-100): {self.total2gen}"
         self.file_picker = ft.FilePicker(on_result=self.save_to_file)
         self.names_generated = []
-        
+        self.name_type = None
+
         self.selRace = ft.Dropdown(
             label="Select race",
             on_change=self.race_change,
             options=[
-                ft.dropdown.Option(key="drow", text="Drow/Dark Elf"),
-                ft.dropdown.Option(key="elf", text="Elf"),
-                ft.dropdown.Option(key="hafling", text="Haflings"),
-                ft.dropdown.Option(key="dwarven", text="Dwarvens"),
-                ft.dropdown.Option(key="gnome", text="Gnomes"),
-                ft.dropdown.Option(key="demons", text="Demons"),
-                ft.dropdown.Option(key="dragons", text="Dragons"),
-                ft.dropdown.Option(key="orcs", text="Orcs"),
+                ft.dropdown.Option(key=None, text='Fantasy', disabled=True),
+                ft.dropdown.Option(key="fantasy,drow", text="Drow/Dark Elf"),
+                ft.dropdown.Option(key="fantasy,elf", text="Elf"),
+                ft.dropdown.Option(key="fantasy,hafling", text="Haflings"),
+                ft.dropdown.Option(key="fantasy,dwarven", text="Dwarvens"),
+                ft.dropdown.Option(key="fantasy,gnome", text="Gnomes"),
+                ft.dropdown.Option(key="fantasy,demons", text="Demons"),
+                ft.dropdown.Option(key="fantasy,dragons", text="Dragons"),
+                ft.dropdown.Option(key="fantasy,orcs", text="Orcs"),
+                ft.dropdown.Option(key=None, text='Real', disabled=True),
+                ft.dropdown.Option(key="real,es", text="Spanish"),
+                ft.dropdown.Option(key="real,en", text="English"),
+                ft.dropdown.Option(key="real,pt", text="Portuguese"),
+                ft.dropdown.Option(key="real,ge", text="Germany"),
+                ft.dropdown.Option(key="real,fr", text="French"),
+                ft.dropdown.Option(key="real,it", text="Italian"),
+                ft.dropdown.Option(key="real,ru", text="Russian"),
+                ft.dropdown.Option(key="real,mu", text="Muslim"),
+                ft.dropdown.Option(key="real,ch", text="Chinese"),
             ]
         )
 
@@ -67,12 +80,14 @@ class NameRand(ft.UserControl):
 
 
     def race_change(self, e):
-        self.race = self.selRace.value
+        self.name_type, self.race = self.selRace.value.split(',')
         self.selSex.disabled = True
 
-        if (self.races[self.race]):
+        if ((self.name_type == 'fantasy' and self.races[self.race]) or self.name_type == 'real'):
             self.selSex.disabled = False
-            self.generate_btn.disabled = True
+            self.sex = self.selSex.value
+            if not self.sex:
+                self.generate_btn.disabled = True
         else:
             self.generate_btn.disabled = False
             self.sex = None
@@ -93,18 +108,28 @@ class NameRand(ft.UserControl):
         self.names_list.clean()
         self.names_generated = []
         
-        methodToCall = getattr(fng, self.race)
-        for _ in range(0, self.total2gen):
-            name = ''
-            if self.sex:
-                name = methodToCall(self.race, self.sex)
-            else:
-                name = methodToCall(self.race)
 
-            self.names_list.controls.append(
-                ft.Text(name)
-            )
-            self.names_generated.append(name)
+        if self.name_type == 'fantasy':
+            methodToCall = getattr(fng, self.race)
+            for _ in range(0, self.total2gen):
+                name = ''
+                if self.sex:
+                    name = methodToCall(self.race, self.sex)
+                else:
+                    name = methodToCall(self.race)
+
+                self.names_list.controls.append(
+                    ft.Text(name)
+                )
+                self.names_generated.append(name)
+        else:
+            names = real_names.generate(self.race, self.sex, self.total2gen)
+            print(names)
+            for name in names:
+                self.names_list.controls.append(
+                    ft.Text(name)
+                )
+                self.names_generated.append(name)
 
         self.save_btn.disabled = False
         self.update()

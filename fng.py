@@ -5,10 +5,10 @@ from os import path
 class Fng:
 
     def __init__(self):
-        self.names_dir = path.dirname(path.realpath(__file__))
+        self.names_dir = path.dirname(path.realpath(__file__)) + '/names/fantasy'
 
     def __getdata(self, race):
-        with open(f'{self.names_dir}/names/{race}.json', 'r', encoding="utf-8") as f:
+        with open(f'{self.names_dir}/{race}.json', 'r', encoding="utf-8") as f:
             content = json.loads(f.read())
             f.close()
             return content
@@ -115,7 +115,7 @@ class Fng:
         return data['names_1'][n] + data['names_2'][n]
 
     def orcs(self, race):
-        with open('names/orcs.txt', 'r', encoding='utf-8') as f:
+        with open(f'{self.names_dir}/orcs.txt', 'r', encoding='utf-8') as f:
             names = f.readlines()
             f.close()
             n = self.dice(0, len(names[1:]))
