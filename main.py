@@ -160,21 +160,18 @@ class NameRand(ft.UserControl):
             self.generate_btn,
             self.save_btn
         ], spacing=20)
-        
-        return ft.Column([
-            ft.Row([
-                form,
-                ft.VerticalDivider(width=1),
-                self.names_list
-            ], expand=True),
-            self.file_picker
+
+        return ft.ResponsiveRow([
+            ft.Column(col={'md': 3, 'sm': 4}, controls=[form]),
+            ft.Column([self.names_list], col={'md': 4, 'sm': 8}, scroll=ft.ScrollMode.ALWAYS),
+            ft.Column([self.file_picker])
         ], expand=True)
 
 
 def main(page: ft.Page):
     page.title = 'Names.Rand'
     page.add(NameRand())
-
+    page.scroll = ft.ScrollMode.ALWAYS
 
 if __name__ == '__main__':
     ft.app(target=main)
