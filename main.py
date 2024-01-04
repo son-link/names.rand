@@ -1,11 +1,10 @@
 import flet as ft
 import csv
-import real_names
 from math import ceil
-from fng import Fng
+from generator import Fantasy, real_names
 
 
-fng = Fng()
+fng = Fantasy()
 
 class NameRand(ft.UserControl):
     def __init__(self):
@@ -123,8 +122,7 @@ class NameRand(ft.UserControl):
                 )
                 self.names_generated.append(name)
         else:
-            names = real_names.generate(self.race, self.sex, self.total2gen)
-            print(names)
+            names = real_names(self.race, self.sex, self.total2gen)
             for name in names:
                 self.names_list.controls.append(
                     ft.Text(name)

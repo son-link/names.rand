@@ -17,7 +17,9 @@ Make with :heart:, [Python](https://www.python.org/) and [Flet](https://flet.dev
 
 &copy; 2024 Alfonso Saavedra "Son Link"
 
-## Fantasy races:
+## Available generators:
+
+### Fantasy races:
 
 * Demons
 * Dragons
@@ -27,6 +29,18 @@ Make with :heart:, [Python](https://www.python.org/) and [Flet](https://flet.dev
 * Gnomes
 * Halflings
 * Orcs
+
+### Languages:
+
+* Chinese
+* English
+* French
+* Germany
+* Italian
+* Muslim
+* Portuguese
+* Russian
+* Spanish
 
 ## How to use
 

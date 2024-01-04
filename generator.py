@@ -1,23 +1,32 @@
 import json, random
-from os import path
+from os import access, path, R_OK
+from random import randint
+
+LOCAL_DIR = path.dirname(path.realpath(__file__))
 
 
-class Fng:
+class Fantasy:
 
     def __init__(self):
-        self.names_dir = path.dirname(path.realpath(__file__)) + '/names/fantasy'
+        self.names_dir = LOCAL_DIR + '/names/fantasy'
 
     def __getdata(self, race):
-        with open(f'{self.names_dir}/{race}.json', 'r', encoding="utf-8") as f:
-            content = json.loads(f.read())
-            f.close()
-            return content
+        if access(f'{self.names_dir}/{race}.json', R_OK):
+            with open(f'{self.names_dir}/{race}.json', 'r', encoding="utf-8") as f:
+                content = json.loads(f.read())
+                f.close()
+                return content
+        else:
+            return None
 
     def dice(self, start=0, limit=0):
         return random.randint(start, limit)
 
     def drow(self, race, sex='male'):
         data = self.__getdata(race)
+        if not data:
+            return None
+
         d10 = self.dice(1, 8)
 
         def __lastname():
@@ -53,6 +62,8 @@ class Fng:
 
     def dragons(self, race):
         data = self.__getdata(race)
+        if not data:
+            return None
 
         def __get_name():
             name = data['names'][self.dice(0, 99)]
@@ -75,6 +86,8 @@ class Fng:
 
     def hafling(self, race, sex='male'):
         data = self.__getdata(race)
+        if not data:
+            return None
 
         def __tofemale(female):
             if female[-1] != female[-2]:
@@ -107,12 +120,13 @@ class Fng:
         return name
 
     def demons(self, race):
-
         data = self.__getdata(race)
+        if not data:
+            return None
 
         n = self.dice(0, len(data['names_1'][1:]))
         s = self.dice(0, len(data['names_2'][1:]))
-        return data['names_1'][n] + data['names_2'][n]
+        return data['names_1'][n] + data['names_2'][s]
 
     def orcs(self, race):
         with open(f'{self.names_dir}/orcs.txt', 'r', encoding='utf-8') as f:
@@ -123,6 +137,8 @@ class Fng:
 
     def dwarven(self, race, sex='male'):
         data = self.__getdata(race)
+        if not data:
+            return None
 
         def __get_name():
             name = data['names'][self.dice(0, 99)]
@@ -141,6 +157,9 @@ class Fng:
 
     def gnome(self, race, sex='male'):
         data = self.__getdata(race)
+        if not data:
+            return None
+
         d20 = self.dice(1, 10)
         if d20 <= 4:
             name = data['names'][self.dice(0, 39)]
@@ -155,6 +174,9 @@ class Fng:
 
     def __gnome_hafling_earned(self, sex):
         data = self.__getdata('gnome_hafling_earned')
+        if not data:
+            return None
+
         n = self.dice(0, len(data['earned_1'][1:]))
         earned_1 = data['earned_1'][n]
         if earned_1.find('/') > -1:
@@ -166,3 +188,35 @@ class Fng:
             earned_2 = 'lady'
 
         return earned_1 + earned_2
+
+
+def real_names(lang, sex, total):
+    # Comprobamos antes si existen los archivos
+    txt_names = f'{LOCAL_DIR}/names/real/{sex}_{lang}.txt'
+    txt_lastnames = f'{LOCAL_DIR}/names/real/lastnames/{lang}.txt'
+    names_generated = []
+
+    if access(txt_names, R_OK) or access(txt_lastnames, R_OK):
+        with open(txt_names, 'r', encoding='utf-8') as names:
+            list_names = names.readlines()
+            with open(txt_lastnames, 'r', encoding='utf-8') as lastnames:
+                list_lastnames = lastnames.readlines()
+                for _ in range(0, total):
+                    n = randint(0, len(list_names[1:]))
+                    m = randint(0, len(list_lastnames[1:]))
+                    name = list_names[n].split()[0]
+                    lastname = list_lastnames[m].split()[0]
+                    if (
+                        lang == 'ru' and sex == 'f' and lastname.endswith('ov')
+                        or lastname.endswith('ev') or lastname.endswith('in')
+                    ):
+                        fullname = f'{name} {lastname}a'
+                    else:
+                        fullname = f'{name} {lastname}'
+
+                    names_generated.append(fullname)
+
+                names.close()
+                lastnames.close()
+
+    return names_generated
