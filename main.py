@@ -7,9 +7,9 @@ from generator import Fantasy, real_names
 fng = Fantasy()
 
 class NameRand(ft.UserControl):
-    def __init__(self):
-        super().__init__()
-        self.expand = True
+    def __init__(self, page):
+        super().__init__(expand=True)
+        self.page = page
         self.race = None
         self.races = {
             "drow": True,
@@ -21,11 +21,15 @@ class NameRand(ft.UserControl):
             'dragons': False,
             'orcs': False,
         }
+        
+        self.file_picker = ft.FilePicker(on_result=self.save_to_file)
+        self.page.overlay.append(self.file_picker)
+        self.page.update()
 
         self.total2gen = 1
         self.sex = None
         self.t2g_text = f"Total generating (1-100): {self.total2gen}"
-        self.file_picker = ft.FilePicker(on_result=self.save_to_file)
+       
         self.names_generated = []
         self.name_type = None
 
@@ -162,16 +166,15 @@ class NameRand(ft.UserControl):
         ], spacing=20)
 
         return ft.ResponsiveRow([
-            ft.Column(col={'md': 3, 'sm': 4}, controls=[form]),
-            ft.Column([self.names_list], col={'md': 4, 'sm': 8}, scroll=ft.ScrollMode.ALWAYS),
-            ft.Column([self.file_picker])
-        ], expand=True)
+            ft.Container(content=form, col={'md': 3, 'sm': 4}),
+            ft.Container(content=self.names_list, col={'md': 9, 'sm': 8}),
+        ])
 
 
 def main(page: ft.Page):
+    app = NameRand(page)
     page.title = 'Names.Rand'
-    page.add(NameRand())
-    page.scroll = ft.ScrollMode.ALWAYS
+    page.add(app)
 
 if __name__ == '__main__':
     ft.app(target=main)
