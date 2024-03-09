@@ -14,7 +14,7 @@ install:
 - pip install -r requirements.txt
 
 build_script:
-- flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." $TARGET
+- flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." $target
 
 test: off
 
@@ -35,7 +35,7 @@ for:
     - image: Visual Studio 2019
   
   init:
-    - TARGET=windows
+    - ps: $target=windows
 
   after_build:
   - 7z a Names.rand-windows.zip %CD%\dist\*.exe
@@ -52,7 +52,7 @@ for:
     - image: macOS
 
   init:
-    - TARGET=macos
+    - $target=macos
 
   after_build:
   - tar -czvf Names.rand-macos.tar.gz -C dist Names.rand.app
@@ -69,7 +69,7 @@ for:
     - image: Ubuntu
   
   init:
-    - TARGET=linux
+    - $target=linux
 
   after_build:
   - tar -czvf Names.rand-linux.tar.gz -C dist Names.rand
