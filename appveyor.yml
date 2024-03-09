@@ -39,12 +39,12 @@ for:
     - flutter upgrade --force
   
   build_script:
-    - flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." windows
+    - flet build --project 'Names.rand' --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." windows
     
   
   after_build:
-  - ls build/windows
-  - 7z a Names.rand-windows.zip %CD%\dist\*.exe
+  - ls build\windows
+  - 7z a Names.rand-windows.zip %CD%\build\windows\*.exe
 
   artifacts:
   - path: Names.rand-windows.zip
@@ -69,10 +69,10 @@ for:
 
   after_build:
   - ls build/macos
-  - tar -czvf flet-macos-amd64.tar.gz -C build/macos/Build/Products/Names.rand.app
+  - tar -czvf Names.rand-macos-amd64.tar.gz -C build/macos/Names.rand.app
 
   artifacts:
-  - path: Names.rand-macos.tar.gz
+  - path: Names.rand-macos-amd64.tar.gz
 
 #
 #   Linux package
@@ -92,8 +92,8 @@ for:
     - flet build --project 'Names.rand' --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." linux
   
   after_build:
-  - ls 
-  - tar -czvf Names.rand-linux.tar.gz -C dist/linux Names.rand
+  - ls build/linux
+  - tar -czvf Names.rand-linux.tar.gz -C build/linux Names.rand
 
   artifacts:
   - path: Names.rand-linux.tar.gz
