@@ -13,8 +13,8 @@ environment:
 install:
 - pip install -r requirements.txt
 
-#build_script:
-#- flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." %TARGET%
+build_script:
+- flet pack main.py --name Names.rand --product-name Names.rand --product-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." --add-data names:names
 
 test: off
 
@@ -33,18 +33,9 @@ for:
   matrix:
     only:
     - image: Visual Studio 2019
-  
-  install:
-    - pip3 install pyyaml flet
-    - flutter upgrade --force
-  
-  build_script:
-    - flet build --project 'Names.rand' --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." windows
-    
-  
+
   after_build:
-  - ls build\windows
-  - 7z a Names.rand-windows.zip %CD%\build\windows\*.exe
+  - 7z a Names.rand-windows.zip %CD%\dist\*.exe
 
   artifacts:
   - path: Names.rand-windows.zip
@@ -57,22 +48,11 @@ for:
     only:
     - image: macOS
 
-  install:
-      - HOMEBREW_NO_AUTO_UPDATE=1 brew install cocoapods
-      - flutter upgrade
-      - flutter config --enable-macos-desktop
-      - flutter doctor
-      - pip3 install pyyaml flet
-
-  build_script:
-    - flet build --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." --project Names.rand macos
-
   after_build:
-  - ls build/macos
-  - tar -czvf Names.rand-macos-amd64.tar.gz -C build/macos Names.rand.app
+  - tar -czvf Names.rand-macos.tar.gz -C dist Names.rand.app
 
   artifacts:
-  - path: Names.rand-macos-amd64.tar.gz
+  - path: Names.rand-macos.tar.gz
 
 #
 #   Linux package
@@ -82,18 +62,8 @@ for:
     only:
     - image: Ubuntu
 
-  install:
-    - sudo apt update --allow-releaseinfo-change
-    - sudo apt install -y libmpv-dev mpv libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
-    - flutter upgrade --force
-    - pip3 install pyyaml flet
-
-  build_script:
-    - flet build --project 'Names.rand' --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." linux
-  
   after_build:
-  - ls build/linux
-  - tar -czvf Names.rand-linux.tar.gz -C build/linux namesrand
+  - tar -czvf Names.rand-linux.tar.gz -C dist Names.rand
 
   artifacts:
   - path: Names.rand-linux.tar.gz
