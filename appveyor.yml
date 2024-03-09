@@ -9,20 +9,12 @@ stack: python 3.10
 environment:
   GITHUB_TOKEN:
     secure: ygZ/Wjv5cu9itNSNUN6z9sguTvsgyQ2txQcXmluFAeuSnABXX6E3gd1fGnimVVAonu6apFd/xobbHM56rQ0p15NQU0ZpGgk06LC1Yl90ArAgaMvIlr0Zrtlvvdrr4xUW
-  matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      TARGET: windows
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
-      TARGET: linux
-    - APPVEYOR_BUILD_WORKER_IMAGE: macOS
-      TARGET: macos
-  
 
 install:
 - pip install -r requirements.txt
 
-build_script:
-- flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." %TARGET%
+#build_script:
+#- flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." %TARGET%
 
 test: off
 
@@ -42,6 +34,9 @@ for:
     only:
     - image: Visual Studio 2019
   
+  build_script:
+    - flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." windows
+  
   after_build:
   - 7z a Names.rand-windows.zip %CD%\dist\*.exe
 
@@ -56,6 +51,9 @@ for:
     only:
     - image: macOS
 
+  build_script:
+    - flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." macos
+
   after_build:
   - tar -czvf Names.rand-macos.tar.gz -C dist Names.rand.app
 
@@ -69,6 +67,9 @@ for:
   matrix:
     only:
     - image: Ubuntu
+
+  build_script:
+    - flet build  --product 'Names.rand' --build-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." linux
   
   after_build:
   - tar -czvf Names.rand-linux.tar.gz -C dist Names.rand
