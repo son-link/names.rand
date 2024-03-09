@@ -69,7 +69,7 @@ for:
 
   after_build:
   - ls build/macos
-  - tar -czvf Names.rand-macos-amd64.tar.gz -C build/macos/Names.rand.app
+  - tar -czvf Names.rand-macos-amd64.tar.gz -C build/macos Names.rand.app
 
   artifacts:
   - path: Names.rand-macos-amd64.tar.gz
@@ -93,7 +93,7 @@ for:
   
   after_build:
   - ls build/linux
-  - tar -czvf Names.rand-linux.tar.gz -C build/linux Names.rand
+  - tar -czvf Names.rand-linux.tar.gz -C build/linux namesrand
 
   artifacts:
   - path: Names.rand-linux.tar.gz
