@@ -74,9 +74,9 @@ class NameRand(ft.UserControl):
         self.t2g_slider = ft.Slider(min=1, max=100, label="{value}", value=self.total2gen,
                             on_change=self.set_t2g, divisions=100, adaptive=True)
 
-        self.generate_btn = ft.ElevatedButton(text="Generate list", icon="start",
+        self.generate_btn = ft.TextButton(text="Generate list", icon="start",
                                         on_click=self.generate)
-        self.save_btn = ft.ElevatedButton(text="Save", icon="save",
+        self.save_btn = ft.TextButton(text="Save", icon="save",
                                     on_click=lambda _: self.file_picker.save_file('Save names', allowed_extensions=['txt', 'csv']))
 
         self.names_list = ft.ListView(spacing=10, padding=20)
@@ -166,8 +166,8 @@ class NameRand(ft.UserControl):
         ], spacing=20)
 
         return ft.ResponsiveRow([
-            ft.Container(content=form, col={'md': 3, 'sm': 4}),
-            ft.Container(content=self.names_list, col={'md': 9, 'sm': 8}),
+            ft.Container(content=form, col={'md': 2, 'sm': 3}),
+            ft.Container(content=self.names_list, col={'md': 10, 'sm': 9}),
         ])
 
 
