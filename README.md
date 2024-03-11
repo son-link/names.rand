@@ -9,7 +9,7 @@
 
 Generates names for various fantasy races, and, in the future, names in different languages.
 
-Available for Linux, Windows and Mac OS. In the future it will also be available for Android.
+Available for Linux, Windows and Mac OS. In the future it will also be available for Android and as PWA (Progressive Web App).
 
 Under the GNU/GPLv3 or newer license.
 
@@ -55,3 +55,19 @@ This requires Python version 3.x (recommended minimum 3.8), as well as the packa
 ```sh
 python3 main.py
 ```
+
+#### Binaries
+
+You can download executables for Windows, Linux and Mac OS from [release page](https://github.com/son-link/names.rand/releases)
+
+
+On GNU/Linux, since flet 0.20.0 you need to have mpv installed.
+
+On **Ubuntu 22.04** and earlier:
+
+`apt install libmpv1`
+
+On other distributions, such as Arch Linux, follow these 2 steps:
+
+* Install the mpv package
+* Create a symbolic link to the library: `ln /usr/lib/libmpv.so.2 /usr/lib/libmpv.so.1` (The path may vary depending on the distribution).
