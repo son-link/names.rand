@@ -11,7 +11,7 @@ environment:
     secure: ygZ/Wjv5cu9itNSNUN6z9sguTvsgyQ2txQcXmluFAeuSnABXX6E3gd1fGnimVVAonu6apFd/xobbHM56rQ0p15NQU0ZpGgk06LC1Yl90ArAgaMvIlr0Zrtlvvdrr4xUW
 
 install:
-- pip install -r requirements.txt .
+- pip install -r requirements.txt
 
 build_script:
 - flet pack main.py --name Names.rand --product-name Names.rand --product-version "0.2.0" --copyright "Copyright (c) 2024 Son Link." --add-data names:names
