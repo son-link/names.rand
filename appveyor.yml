@@ -50,8 +50,8 @@ for:
     - image: macOS
 
   after_build:
-  - ls dist
   - tar -czvf Names.rand-macos.tar.gz -C dist Names.rand.app
+  - tar -czvf Names.rand-macos-cli.tar.gz -C dist namesrand-cli
 
   artifacts:
   - path: Names.rand-macos.tar.gz
