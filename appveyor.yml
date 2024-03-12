@@ -55,6 +55,7 @@ for:
 
   artifacts:
   - path: Names.rand-macos.tar.gz
+  - path: Names.rand-macos-cli.tar.gz
 
 #
 #   Linux package
@@ -70,4 +71,5 @@ for:
 
   artifacts:
   - path: Names.rand-linux.tar.gz
+  - path: Names.rand-linux-cli.tar.gz
 
