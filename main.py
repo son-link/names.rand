@@ -65,7 +65,7 @@ class NameRand(ft.UserControl):
             on_change=self.set_sex,
             options=[
                 ft.dropdown.Option(key="male", text="Male"),
-                ft.dropdown.Option(key="female", text="Felame")
+                ft.dropdown.Option(key="female", text="Female")
             ]
         )
 
